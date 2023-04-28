@@ -1,0 +1,104 @@
+@startuml
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <u>x</u>
+!define foreign_key(x) <#x>
+
+package "io.thorib.dashboard.DTO" {
+    interface DashboardDTO
+    DashboardDTO <|-- UserDTO
+
+    class UserDTO {
+        primary_key(id)
+        + name: String
+        + email: String
+        + phoneNumber: String
+    }
+}
+
+package "io.thorib.dashboard.Action" {
+    interface DashboardAction
+    DashboardAction <|-- FetchUser
+    DashboardAction <|-- ShowError
+    class FetchUser {
+        + userId: String
+    }
+    class ShowError {
+        + message: String
+    }
+}
+
+package "io.thorib.dashboard.State" {
+    interface DashboardState
+    DashboardState <|-- Loading
+    DashboardState <|-- Success
+    DashboardState <|-- Error
+
+    class Loading {
+    }
+
+    class Success {
+        + user: UserDTO
+    }
+
+    class Error {
+        + message: String
+    }
+}
+
+package "io.thorib.dashboard.Service" {
+    interface DashboardService
+    DashboardService <|-- FetchUserService
+    DashboardService <|-- ShowErrorService
+
+    class FetchUserService {
+    }
+
+    class ShowErrorService {
+    }
+}
+
+package "io.thorib.dashboard.Repository" {
+    interface DashboardRepository
+    DashboardRepository <|-- UserRepository
+
+    class UserRepository {
+    }
+}
+
+package "io.thorib.dashboard.ActionDispatcher" {
+    interface DashboardActionDispatcher
+    DashboardActionDispatcher <|-- FetchUserActionDispatcher
+    DashboardActionDispatcher <|-- ShowErrorActionDispatcher
+
+    class FetchUserActionDispatcher {
+    }
+
+    class ShowErrorActionDispatcher {
+    }
+}
+
+package "io.thorib.dashboard.StateReducer" {
+    interface DashboardStateReducer
+    DashboardStateReducer <|-- DashboardReducer
+
+    class DashboardReducer {
+    }
+}
+
+package "io.thorib.dashboard.SideEffect" {
+    interface DashboardSideEffect
+    DashboardSideEffect <|-- LogErrorSideEffect
+
+    class LogErrorSideEffect {
+    }
+}
+
+package "io.thorib.dashboard.Feature" {
+    interface DashboardFeature
+    DashboardFeature <|-- DashboardFeatureImpl
+
+    class DashboardFeatureImpl {
+    }
+}
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+!define AWSPUML https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v14.0/Legacy/
+
+
+package root as "rootProject"
+package app
+package core
+package "dashboard-domain" as domain
+package "dashboard-data" as data {
+    package "dashboard-service" as service
+    package "dashboard-repository" as repository
+}
+package "dashboard-presentation" as presentation {
+    package "dashboard-statereducer" as statereducer
+    package "dashboard-sideeffects" as sideeffects
+}
+
+root --> app
+root --> core
+root --> domain
+root --> data
+root --> presentation
+data --> service
+data --> repository
+presentation --> statereducer
+presentation --> sideeffects
+@enduml
